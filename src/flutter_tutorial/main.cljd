@@ -1,0 +1,90 @@
+(ns flutter-tutorial.main
+  ;; pure dart package are imported using string
+  (:require ["package:flutter/material.dart" :as material]
+            ["package:flutter/widgets.dart" :as widgets]
+            ["package:flutter/painting.dart" :as painting]
+            ["package:flutter/rendering.dart" :as rendering]
+            ["dart:ui" :as ui]))
+
+(def primaryColor
+  material.Colors/blue)
+
+(def titleSection
+  (widgets/Container
+   :padding (. painting/EdgeInsets all 32)
+   :child (widgets/Row
+           :children [(widgets/Expanded
+                       :child (widgets/Column
+                               :crossAxisAlignment (. rendering/CrossAxisAlignment start)
+                               :children [(widgets/Container
+                                           :padding (. painting/EdgeInsets only :bottom 8)
+                                           :child (widgets/Text "Oeschinen Lake Campground"
+                                                                :style (painting/TextStyle
+                                                                        :fontWeight (. painting/FontWeight bold))))
+                                          (widgets/Text "Kandersteg, Switzerland"
+                                                        :style (painting/TextStyle
+                                                                :color material.Colors/grey))]))
+                      (widgets/Icon (. material/Icons star)
+                                    :color material.Colors/red)
+                      (widgets/Text "41")])))
+
+(defn buildButtonColumn [color icon text]
+  (widgets/Column
+   :mainAxisSize (. rendering/MainAxisSize min)
+   :mainAxisAlignment (. rendering/MainAxisAlignment center)
+   :children [icon
+              (widgets/Container
+               :margin (. painting/EdgeInsets only :top 8)
+               :child (widgets/Text text
+                                    :style (painting/TextStyle
+                                            :fontSize 12
+                                            :fontWeight (. ui/FontWeight w400)
+                                            :color color)))]))
+
+(def buttonSection
+  (widgets/Row
+   :mainAxisAlignment (. rendering/MainAxisAlignment spaceEvenly)
+   :children [(buildButtonColumn primaryColor
+                                 (widgets/Icon (. material/Icons call)
+                                               :color primaryColor)
+                                 "CALL")
+              (buildButtonColumn primaryColor
+                                 (widgets/Icon (. material/Icons near_me)
+                                               :color primaryColor)
+                                 "ROUTE")
+              (buildButtonColumn primaryColor
+                                 (widgets/Icon (. material/Icons share)
+                                               :color primaryColor)
+                                 "SHARE")]))
+
+(def textSection
+  (widgets/Padding
+   :padding (. painting/EdgeInsets all 32)
+   :child (widgets/Text
+           (str "Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese "
+                "Alps. Situated 1,578 meters above sea level, it is one of the "
+                "larger Alpine Lakes. A gondola ride from Kandersteg, followed by a "
+                "half-hour walk through pastures and pine forest, leads you to the "
+                "lake, which warms to 20 degrees Celsius in the summer. Activities "
+                "enjoyed here include rowing, and riding the summer toboggan run.")
+           :softWrap true)))
+
+(def imageSection
+  (. widgets/Image asset "images/lake.jpg"
+     :width 600
+     :height 240
+     :fit (. painting/BoxFit cover)))
+
+(defn main []
+  (material/runApp
+   (material/MaterialApp
+    :title "Flutter layout demo"
+    :theme (material/ThemeData :primarySwatch primaryColor)
+    :home (material/Scaffold
+           :appBar (material/AppBar
+                    :title (widgets/Text "Flutter layout demo"))
+           :body (widgets/ListView
+                  :children [imageSection
+                             titleSection
+                             buttonSection
+                             textSection])))))
