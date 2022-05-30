@@ -1,13 +1,42 @@
 (ns flutter-tutorial.main
+  "Faithful port of https://docs.flutter.dev/development/ui/layout/tutorial"
   ;; pure dart package are imported using string
   (:require ["package:flutter/material.dart" :as material]
             ["package:flutter/widgets.dart" :as widgets]
             ["package:flutter/painting.dart" :as painting]
             ["package:flutter/rendering.dart" :as rendering]
-            ["dart:ui" :as ui]))
+            ["dart:ui" :as ui]
+            [cljd.flutter.alpha :as flutter]))
 
 (def primaryColor
   material.Colors/blue)
+
+(def FavoriteWidgetState
+  (flutter/widget
+   :state [state-atom {:favorited true
+                       :counter 41}]
+   (widgets/Row
+    :mainAxisSize (. rendering/MainAxisSize min)
+    :children [(widgets/Container
+                :padding (. painting/EdgeInsets all 0)
+                :child (material/IconButton
+                        :padding (. painting/EdgeInsets all 0)
+                        :alignment (. painting/Alignment centerRight)
+                        :icon (if (:favorited @state-atom)
+                                (widgets/Icon (. material/Icons star))
+                                (widgets/Icon (. material/Icons star_border)))
+                        :color material.Colors/red
+                        :onPressed #(if (:favorited @state-atom)
+                                      (do
+                                        (swap! state-atom update :counter dec)
+                                        (swap! state-atom update :favorited not))
+                                      (do
+                                        (swap! state-atom update :counter inc)
+                                        (swap! state-atom update :favorited not)))))
+               (widgets/SizedBox
+                :width 18
+                :child (widgets/SizedBox
+                        :child (widgets/Text (str (:counter @state-atom)))))])))
 
 (def titleSection
   (widgets/Container
@@ -24,9 +53,7 @@
                                           (widgets/Text "Kandersteg, Switzerland"
                                                         :style (painting/TextStyle
                                                                 :color material.Colors/grey))]))
-                      (widgets/Icon (. material/Icons star)
-                                    :color material.Colors/red)
-                      (widgets/Text "41")])))
+                      FavoriteWidgetState])))
 
 (defn buildButtonColumn [color icon text]
   (widgets/Column
