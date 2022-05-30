@@ -1,6 +1,6 @@
-# flutter_tutorial
+# flutter-layout-tutorial
 
-A new Flutter project following the [Flutter Tutorial](https://docs.flutter.dev/reference/tutorials) in [ClojureDart](https://github.com/Tensegritics/ClojureDart).
+A new Flutter project following the [Flutter Layout and Interactivity Tutorials](https://docs.flutter.dev/reference/tutorials). But using [ClojureDart](https://github.com/Tensegritics/ClojureDart).
 
 ## Getting Started
 
