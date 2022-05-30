@@ -1,5 +1,5 @@
 (ns flutter-tutorial.main
-  "Faithful port of https://docs.flutter.dev/development/ui/layout/tutorial"
+  "Faithful port of https://docs.flutter.dev/development/ui/interactive"
   ;; pure dart package are imported using string
   (:require ["package:flutter/material.dart" :as material]
             ["package:flutter/widgets.dart" :as widgets]
@@ -38,7 +38,7 @@
                 :child (widgets/SizedBox
                         :child (widgets/Text (str (:counter @state-atom)))))])))
 
-(def titleSection
+(defn titleSection [title subtitle]
   (widgets/Container
    :padding (. painting/EdgeInsets all 32)
    :child (widgets/Row
@@ -47,10 +47,10 @@
                                :crossAxisAlignment (. rendering/CrossAxisAlignment start)
                                :children [(widgets/Container
                                            :padding (. painting/EdgeInsets only :bottom 8)
-                                           :child (widgets/Text "Oeschinen Lake Campground"
+                                           :child (widgets/Text title
                                                                 :style (painting/TextStyle
                                                                         :fontWeight (. painting/FontWeight bold))))
-                                          (widgets/Text "Kandersteg, Switzerland"
+                                          (widgets/Text subtitle
                                                         :style (painting/TextStyle
                                                                 :color material.Colors/grey))]))
                       FavoriteWidgetState])))
@@ -84,16 +84,11 @@
                                                :color primaryColor)
                                  "SHARE")]))
 
-(def textSection
+(defn textSection [description]
   (widgets/Padding
    :padding (. painting/EdgeInsets all 32)
    :child (widgets/Text
-           (str "Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese "
-                "Alps. Situated 1,578 meters above sea level, it is one of the "
-                "larger Alpine Lakes. A gondola ride from Kandersteg, followed by a "
-                "half-hour walk through pastures and pine forest, leads you to the "
-                "lake, which warms to 20 degrees Celsius in the summer. Activities "
-                "enjoyed here include rowing, and riding the summer toboggan run.")
+           description
            :softWrap true)))
 
 (def imageSection
@@ -101,6 +96,14 @@
      :width 600
      :height 240
      :fit (. painting/BoxFit cover)))
+
+(def OLC-description
+  (str "Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese "
+       "Alps. Situated 1,578 meters above sea level, it is one of the "
+       "larger Alpine Lakes. A gondola ride from Kandersteg, followed by a "
+       "half-hour walk through pastures and pine forest, leads you to the "
+       "lake, which warms to 20 degrees Celsius in the summer. Activities "
+       "enjoyed here include rowing, and riding the summer toboggan run."))
 
 (defn main []
   (material/runApp
@@ -112,6 +115,9 @@
                     :title (widgets/Text "Flutter layout demo"))
            :body (widgets/ListView
                   :children [imageSection
-                             titleSection
+                             (titleSection
+                              "Oeschinen Lake Campground"
+                              "Kandersteg, Switzerland")
                              buttonSection
-                             textSection])))))
+                             (textSection
+                              OLC-description)])))))
