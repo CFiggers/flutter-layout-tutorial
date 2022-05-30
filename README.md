@@ -8,7 +8,7 @@ A new Flutter project following the [Flutter Tutorial](https://docs.flutter.dev/
 
 2. Clone this repo.
 
-3. Initialize the project using `clj -M -m cljd.build init flutter-tutorial.main`.
+3. Initialize the project using `clj -M -m cljd.build init layout-tutorial.main`.
 
 4. Fire up a target device (such as an Android emulator using Android Studio).
 

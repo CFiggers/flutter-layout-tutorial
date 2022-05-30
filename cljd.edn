@@ -1,1 +1,1 @@
-{:main flutter-tutorial.main, :bin "flutter"}
+{:main layout-tutorial.main, :bin "flutter"}
