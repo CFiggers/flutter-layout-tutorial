@@ -12,26 +12,26 @@
   material.Colors/blue)
 
 (def imageSection
-  (. widgets/Image asset "images/lake.jpg"
-     :width 600
-     :height 240
-     :fit (. painting/BoxFit cover)))
+  (widgets.Image/asset "images/lake.jpg"
+                       :width 600
+                       :height 240
+                       :fit painting.BoxFit/cover))
 
 (def FavoriteWidgetState
   (flutter/widget
    :state [state-atom {:favorited true
                        :counter 41}]
    (widgets/Row
-    :mainAxisSize (. rendering/MainAxisSize min)
+    :mainAxisSize rendering.MainAxisSize/min
     :children [(flutter/nest
                 (widgets/Container
-                 :padding (. painting/EdgeInsets all 0))
+                 :padding (painting.EdgeInsets/all 0))
                 (material/IconButton
-                 :padding (. painting/EdgeInsets all 0)
-                 :alignment (. painting/Alignment centerRight)
+                 :padding (painting.EdgeInsets/all 0)
+                 :alignment painting.Alignment/centerRight
                  :icon (if (:favorited @state-atom)
-                         (widgets/Icon (. material/Icons star))
-                         (widgets/Icon (. material/Icons star_border)))
+                         (widgets/Icon material.Icons/star)
+                         (widgets/Icon material.Icons/star_border))
                  :color material.Colors/red
                  :onPressed #(if (:favorited @state-atom)
                                (do
@@ -49,23 +49,24 @@
 (def titleSection
   (flutter/nest
    (widgets/Container
-    :padding (. painting/EdgeInsets all 32))
+    :padding (painting.EdgeInsets/all 32))
    (widgets/Row
     :children [(flutter/nest
                 widgets/Expanded
                 (widgets/Column
-                 :crossAxisAlignment (. rendering/CrossAxisAlignment start)
+                 :crossAxisAlignment rendering.CrossAxisAlignment/start
                  :children [(flutter/nest
                              (widgets/Container
-                              :padding (. painting/EdgeInsets only :bottom 8))
+                              :padding (painting.EdgeInsets/only :bottom 8))
                              (widgets/Text "Oeschinen Lake Campground"
                                            :style (painting/TextStyle
-                                                   :fontWeight (. painting/FontWeight bold))))
+                                                   :fontWeight (painting.FontWeight/bold))))
                             (widgets/Text "Kandersteg, Switzerland"
                                           :style (painting/TextStyle
                                                   :color material.Colors/grey))]))
                FavoriteWidgetState])))
 
+<<<<<<< Updated upstream
 (defn buildButtonColumn [color icon text]
   (widgets/Column
    :mainAxisSize (. rendering/MainAxisSize min)
@@ -80,6 +81,22 @@
                                      :fontSize 12
                                      :fontWeight (. ui/FontWeight w400)
                                      :color color)))]))
+=======
+(defmacro buildButtonColumn [color icon text]
+  `(widgets/Column
+    :mainAxisSize rendering.MainAxisSize/min
+    :mainAxisAlignment rendering.MainAxisAlignment/center
+    :children [(widgets/Icon (. material/Icons ~icon)
+                             :color primaryColor)
+               (flutter/nest
+                (widgets/Container
+                 :margin (painting.EdgeInsets/only :top 8))
+                (widgets/Text ~text
+                              :style (painting/TextStyle
+                                      :fontSize 12
+                                      :fontWeight ui.FontWeight/w400
+                                      :color ~color)))]))
+>>>>>>> Stashed changes
 
 (def buttonSection
   (widgets/Row
@@ -91,7 +108,7 @@
 (def textSection
   (flutter/nest
    (widgets/Padding
-    :padding (. painting/EdgeInsets all 32))
+    :padding (painting.EdgeInsets/all 32))
    (widgets/Text
     (str "Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese "
          "Alps. Situated 1,578 meters above sea level, it is one of the "
