@@ -66,37 +66,20 @@
                                                   :color material.Colors/grey))]))
                FavoriteWidgetState])))
 
-<<<<<<< Updated upstream
 (defn buildButtonColumn [color icon text]
   (widgets/Column
-   :mainAxisSize (. rendering/MainAxisSize min)
-   :mainAxisAlignment (. rendering/MainAxisAlignment center)
+   :mainAxisSize rendering.MainAxisSize/min
+   :mainAxisAlignment rendering.MainAxisAlignment/center
    :children [(widgets/Icon icon
                             :color primaryColor)
               (flutter/nest
                (widgets/Container
-                :margin (. painting/EdgeInsets only :top 8))
+                :margin (painting.EdgeInsets/only :top 8))
                (widgets/Text text
                              :style (painting/TextStyle
                                      :fontSize 12
-                                     :fontWeight (. ui/FontWeight w400)
+                                     :fontWeight ui.FontWeight/w400
                                      :color color)))]))
-=======
-(defmacro buildButtonColumn [color icon text]
-  `(widgets/Column
-    :mainAxisSize rendering.MainAxisSize/min
-    :mainAxisAlignment rendering.MainAxisAlignment/center
-    :children [(widgets/Icon (. material/Icons ~icon)
-                             :color primaryColor)
-               (flutter/nest
-                (widgets/Container
-                 :margin (painting.EdgeInsets/only :top 8))
-                (widgets/Text ~text
-                              :style (painting/TextStyle
-                                      :fontSize 12
-                                      :fontWeight ui.FontWeight/w400
-                                      :color ~color)))]))
->>>>>>> Stashed changes
 
 (def buttonSection
   (widgets/Row
