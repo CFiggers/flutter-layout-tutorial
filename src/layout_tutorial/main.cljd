@@ -8,16 +8,16 @@
             ["dart:ui" :as ui]
             [cljd.flutter.alpha :as flutter]))
 
-(def primaryColor
+(def primary-color
   material.Colors/blue)
 
-(def imageSection
+(def image-section
   (widgets.Image/asset "images/lake.jpg"
                        :width 600
                        :height 240
                        :fit painting.BoxFit/cover))
 
-(def FavoriteWidgetState
+(def favorite-widget-state
   (flutter/widget
    :state [state-atom {:favorited true
                        :counter 41}]
@@ -46,7 +46,7 @@
                 (widgets/SizedBox)
                 (widgets/Text (str (:counter @state-atom))))])))
 
-(def titleSection
+(def title-section
   (flutter/nest
    (widgets/Container
     :padding (painting.EdgeInsets/all 32))
@@ -64,14 +64,14 @@
                             (widgets/Text "Kandersteg, Switzerland"
                                           :style (painting/TextStyle
                                                   :color material.Colors/grey))]))
-               FavoriteWidgetState])))
+               favorite-widget-state])))
 
-(defn buildButtonColumn [color icon text]
+(defn build-button-column [color icon text]
   (widgets/Column
    :mainAxisSize rendering.MainAxisSize/min
    :mainAxisAlignment rendering.MainAxisAlignment/center
    :children [(widgets/Icon icon
-                            :color primaryColor)
+                            :color primary-color)
               (flutter/nest
                (widgets/Container
                 :margin (painting.EdgeInsets/only :top 8))
@@ -81,14 +81,14 @@
                                      :fontWeight ui.FontWeight/w400
                                      :color color)))]))
 
-(def buttonSection
+(def button-section
   (widgets/Row
    :mainAxisAlignment (. rendering/MainAxisAlignment spaceEvenly)
-   :children [(buildButtonColumn primaryColor material.Icons/call "CALL")
-              (buildButtonColumn primaryColor material.Icons/near_me "ROUTE")
-              (buildButtonColumn primaryColor material.Icons/share "SHARE")]))
+   :children [(build-button-column primary-color material.Icons/call "CALL")
+              (build-button-column primary-color material.Icons/near_me "ROUTE")
+              (build-button-column primary-color material.Icons/share "SHARE")]))
 
-(def textSection
+(def text-section
   (flutter/nest
    (widgets/Padding
     :padding (painting.EdgeInsets/all 32))
@@ -105,12 +105,12 @@
   (material/runApp
    (material/MaterialApp
     :title "Flutter layout demo"
-    :theme (material/ThemeData :primarySwatch primaryColor)
+    :theme (material/ThemeData :primarySwatch primary-color)
     :home (material/Scaffold
            :appBar (material/AppBar
                     :title (widgets/Text "Flutter layout demo"))
            :body (widgets/ListView
-                  :children [imageSection
-                             titleSection
-                             buttonSection
-                             textSection])))))
+                  :children [image-section
+                             title-section
+                             button-section
+                             text-section])))))
